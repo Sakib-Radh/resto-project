@@ -15,25 +15,44 @@
 
 <script>
 
+import axios from 'axios'
+
 export default{
   name:'Login',
   data()
   {
       return{
-          email: '',
-          password: ''
+          email:'',
+          password:''
       }
   },
 
     methods:
     {
-        login()
+        async login()
         {
-            console.warn(this.email,this.password)
-        }
+            let result = await axios.get(
+                'http://localhost:3000/users?email=${this.email}&&password=${this.password}'
+            );
+
+             if(result.status==200  )
+            {
+                localStorage.setItem("user-info", JSON.stringify(result.data[0]))
+                this.$router.push({name:'Home'})
+            }
+            console.warn(result);
+            
+        },
+    },
+   mounted()
+{
+    let user = localStorage.getItem('user-info');
+
+    if(user)
+    {
+        this.$router.push({name: "Home"})
     }
-
-
+}
 };
 
 </script>

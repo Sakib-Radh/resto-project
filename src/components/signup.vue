@@ -35,7 +35,7 @@ export default{
     methods:{
         async signup()
         {
-            let result = axios.post(" http://localhost:3000/users", {
+            let result = await axios.post(" http://localhost:3000/users", {
                 name: this.name,
                 email: this.email,
                 password: this.password
